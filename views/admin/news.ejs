@@ -1,0 +1,63 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Most Popular Places in Istanbul</title>
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<!-- Add the EJS code -->
+<h3 style="text-align: center;">Most popular to visit places in Istanbul</h3>
+
+<div style="max-width: 800px; margin: 0 auto;">
+    <!-- Add a canvas element for the chart -->
+    <canvas id="attractionsChart"></canvas>
+</div>
+
+<!-- Include the JavaScript code -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const attractionsData = {
+            labels: ['Hagia Sophia', 'Topkapi Palace', 'Grand Bazaar', 'Bosphorus Bridge', 'Blue Mosque'],
+            datasets: [{
+                label: 'Popularity',
+                data: [90, 85, 80, 75, 70],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        const ctx = document.getElementById('attractionsChart').getContext('2d');
+        const attractionsChart = new Chart(ctx, {
+            type: 'bar',
+            data: attractionsData,
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

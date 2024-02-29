@@ -1,0 +1,19 @@
+<h3 style="text-align: center;">Sign In</h3>
+
+<form class="reg" action="/" method="POST">
+
+  <label for="username"><b>Username</b></label>
+  <input type="text" placeholder="Enter Username" name="username">
+
+  <label for="password"><b>Password</b></label>
+  <input type="password" placeholder="Enter Password" name="password">
+
+  <input type="submit" value="Login" class="btn">
+
+  <% if (typeof message !== 'undefined') { %>
+    <p><%= message %></p>
+  <% } %>
+  <p>Don't have an account? <a href="/register">Register</a>.</p>
+</form>
+<br>
+
