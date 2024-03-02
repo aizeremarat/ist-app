@@ -8,12 +8,45 @@
   <label for="image"><b>Image URL</b></label>
   <input type="text" name="image" placeholder="Enter Image URL" required>
 
-  <label for="model"><b>Model</b></label>
+  <label for="model"><b>Place</b></label>
   <input type="text" placeholder="Enter Model" name="model" required>
 
   <label for="description"><b>Description</b></label>
   <textarea name="description" placeholder="Enter Description" rows="4" required></textarea>
 
-  <input type="submit" value="Add Carousel Item" class="btn">
+  <input type="submit" value="Add Item" class="btn">
 
 </form>
+<style>
+          form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        form input[type="text"],
+        form textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        form input[type="submit"] {
+            background-color: #ba1616;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        form input[type="submit"]:hover {
+            background-color: #ba1616;
+        }
+</style>

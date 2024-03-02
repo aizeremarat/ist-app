@@ -43,13 +43,12 @@ const isAdmin = (req, res, next) => {
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-      cb(null, '../WEB Back Assignment4 Final Zhagaparov Dias/public/img') 
+      cb(null, 'C:\backend\Новая папка\Final\public\img') 
   },
   filename: function (req, file, cb) {
       cb(null, file.originalname) 
   }
 });
-
 
 const upload = multer({ storage: storage });
 
@@ -62,6 +61,7 @@ router.get('/dashboard', authMiddleware, async (req, res) => {
     }
 
     const data = await Car.find(); 
+
     res.render('admin/dashboard', {
       locals,
       data,
@@ -70,27 +70,8 @@ router.get('/dashboard', authMiddleware, async (req, res) => {
 
   } catch (error) {
     console.log(error);
-  }
-});
-
-
-
-router.get('/add-post', authMiddleware, isAdmin, async (req, res) => {
-  try {
-    const locals = {
-        title: 'Add New Carousel Item',
-        description: 'Add a new item to the carousel.',
-    };
-
-    res.render('../views/admin/add-post', {
-        locals,
-        layout: adminLayout
-    });
-} catch (error) {
-    console.log(error);
     res.status(500).json({ message: 'Internal server error' });
-}
-  
+  }
 });
 
 router.post('/add-post', upload.single('image'), isAdmin, async (req, res) => {
@@ -117,52 +98,26 @@ router.post('/add-post', upload.single('image'), isAdmin, async (req, res) => {
 });
 
 
-router.get('/edit-post/:id', authMiddleware, isAdmin, async (req, res) => {
-  try {
-    const carId = req.params.id;
-    const car = await Car.findById(carId);
 
+router.get('/edit-post/1', async (req, res) => {
+  try {
+    // Fetch the car with the ID "1" from the database
+    const car = await Car.findById("1");
+
+    // If the car with the given ID is not found, return a 404 error
     if (!car) {
       return res.status(404).send("Car not found");
     }
 
-    res.render('admin/edit-post', {
-      title: "Edit Car",
-      description: "Edit Car",
-      car,
-      layout: adminLayout
-    });
-
+    // Render the edit-post template with the fetched car data
+    res.render('edit-post', { car });
   } catch (error) {
+    // If an error occurs during the database query, return a 500 error
     console.error(error);
     res.status(500).send("Internal Server Error");
   }
 });
 
-
-router.put('/edit-post/:id', authMiddleware, isAdmin, async (req, res) => {
-  try {
-    const carId = req.params.id;
-    const { image, model, description } = req.body;
-
-    const updatedCar = await Car.findByIdAndUpdate(carId, {
-      image,
-      model,
-      description,
-      updatedAt: Date.now()
-    }, { new: true });
-
-    if (!updatedCar) {
-      return res.status(404).send("Car not found");
-    }
-
-    res.redirect('/dashboard');
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
-});
 
 router.delete('/delete-post/:id', authMiddleware, isAdmin, async (req, res) => {
   try {

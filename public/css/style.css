@@ -11,7 +11,16 @@
   --font-size-xl: clamp(2.44rem, 2.38vw + 1.85rem, 3.75rem);
   --border-radius: 10px;
 }
-
+body{
+  background-attachment: fixed;
+  background-image: url(https://img.freepik.com/free-vector/neumorphic-round-shape-design-empty-white-banner_1017-43171.jpg?w=1060&t=st=1709371239~exp=1709371839~hmac=775746acf94c01d88b7ad8681b875d1aae208e8d1cef803dc71687dd3b4bc6a3);
+}
+.background{
+  opacity: 0.8 !important;
+}
+*{
+  font-family: "Montserrat", sans-serif;
+}
 body {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
@@ -20,13 +29,13 @@ body {
   color: var(--black);
   font-size: var(--font-size-base);
   background-color: #fffaf0;
-  background-image: url("/img/back_hyundai");
+  /* background-image: url("back_hyundai.jpg"); */
   margin: 0;
 }
 
 .carousel {
   position: relative;
-  max-width: 100%;
+  max-width: 80%;
   overflow: hidden;
 }
 
@@ -168,8 +177,8 @@ img {
 
 /* Layout */
 .container {
-  max-width: 982px;
-  margin: 0 auto;
+  max-width: 95%;
+  margin: 0 ;
   padding: 0 10px;
   margin-bottom: 20px;
 }
@@ -374,13 +383,12 @@ img {
 }
 
 .footer {
-  background-color: white; /* Set the background color to white */
+  background-color: white; 
   text-align: center;
-  position: fixed; /* Fix the position of the footer */
-  bottom: 0; /* Position it at the bottom of the viewport */
+  position: fixed; 
+  bottom: 0;
   width:100%; 
-  margin-left: -15%;/* Make it take the full width of the viewport minus the left padding */
-  padding: 10px 0; /* Keep top and bottom padding, remove left and right padding */
+  padding: 10px 20px;
 }
 
 

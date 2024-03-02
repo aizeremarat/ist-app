@@ -96,10 +96,10 @@ router.get('/', async (req, res) => {
         });
         await newUser.save();
 
-        // Send welcome email to the user's email address
+       
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            to: newUser.username, // Use the username as the email address
+            to: newUser.username, 
             subject: "Welcome to Our Website",
             text: "Thank you for registering on our website. We're glad to have you!",
         };

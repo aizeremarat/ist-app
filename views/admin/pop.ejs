@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,28 +6,83 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Population of Istanbul</title>
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        #populationChart {
+            width: 300px;
+            height: 150px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Population of Istanbul</h1>
-    <div id="population"></div>
+    <h3 style="text-align: center;">Population of Istanbul for now: <span id="population"></span></h3>
+    <div class="background">
+        <img src="ortakoy-mosque-in-istanbul-5e57byguf3ceh5j0.jpg" alt="">
+    </div>
+    <!-- Create canvas element for the chart -->
+    <canvas id="populationChart" width="700" height="200"></canvas>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-        $(document).ready(function() {
-     
-            const getPopulation = async () => {
-                try {
-                    const response = await fetch('/pop');
-                    const data = await response.json();
-                    
-                    $('#population').text(`Population of Istanbul: ${data}`);
-                } catch (error) {
-                    console.error('Error fetching population data:', error);
-                }
-            };
+        function getIstanbulPopulation() {
+            const cityName = 'Istanbul';
+            const apiKey = 'iQ7pPfaXcIpNTNAasd/+TQ==6NCW1SVoqnDbbaMM'; // Replace 'YOUR_API_KEY' with your actual API key
 
-     
-            getPopulation();
+            fetch(`https://api.api-ninjas.com/v1/city?name=${cityName}`, {
+                headers: {
+                    'X-Api-Key': apiKey
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if(data.length > 0) {
+                    const population = data[0].population;
+                    document.getElementById('population').textContent = `${population}`;
+                } else {
+                    document.getElementById('population').textContent = `Population data not found for ${cityName}`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('population').textContent = 'An error occurred while retrieving population data.';
+            });
+        }
+
+        // Call the function to retrieve population data when the page loads
+        window.onload = getIstanbulPopulation;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample population data for the last 5 years
+            const years = ['2017', '2018', '2019', '2020', '2021'];
+            const populations = [13285000, 13546000, 14285000, 14889000, 15285000];
+
+            // Create chart
+            const ctx = document.getElementById('populationChart').getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: years,
+                    datasets: [{
+                        label: 'Population of Istanbul',
+                        data: populations,
+                        borderColor: 'blue',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 13000000
+                        }
+                    }
+                }
+            });
         });
     </script>
 </body>

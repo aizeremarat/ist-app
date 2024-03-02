@@ -1,26 +1,37 @@
 <div class="admin-title">
-  <h2 style="text-align: center;">Sightseeings</h2>
+
 </div>
 
-<div class="carousel">
-  <% data.forEach((car, index) => { %>
-    <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-      <div class="carousel-item-content">
-        <h3><%= car.model %></h3>
-        <p><%= car.description %></p>
-        <a href="/add-post" class="button-add">Add New</a>
-        <a href="/edit-post/<%= car._id %>" class="button-edit">Edit</a>
-            <form action="/delete-post/<%= car._id %>?_method=DELETE" method="POST">
-              <button type="submit" class="button-delete">Delete</button>
-        </form>
-      </div>
-      <img src="<%= car.image %>" alt="<%= car.model %>">
-    </div>
-  <% }) %>
-  <button class="prev" onclick="plusSlides(-1)">&#10094;</button>
-  <button class="next" onclick="plusSlides(1)">&#10095;</button>
+<div class="carousel-item active">
+  <div class="carousel-item-content">
+    <h3>The Blue Mosque</h3>
+    <p>The mosque is renowned for its stunning blue-tiled interior, which gives it its popular name. It features a central dome surrounded by smaller domes and semi-domes, as well as intricate calligraphy and tilework throughout the interior.</p>
+    <a href="/add-post" class="button-add">Add New</a>
+    <a href="/edit-post/1" class="button-edit">Edit</a>
+    <form action="/delete-post/1" method="POST">
+      <button type="submit" class="button-delete">Delete</button>
+    </form>
+  </div>
+  <img src="https://static.tildacdn.com/tild6262-3132-4238-a531-343133616538/kartinki24_city_0023.jpg" alt="Car Model 1">
 </div>
 
+<div class="carousel-item">
+  <div class="carousel-item-content">
+    <h3>Taksim Square</h3>
+    <p>Taksim Square is located in the Beyoğlu district of Istanbul and serves as a central hub for both locals and tourists. It is known for its bustling atmosphere, surrounded by shops, restaurants, hotels, and cultural landmarks.</p>
+    <a href="/add-post" class="button-add">Add New</a>
+    <a href="/edit-post/2" class="button-edit">Edit</a>
+    <form action="/delete-post/2" method="POST">
+      <button type="submit" class="button-delete">Delete</button>
+    </form>
+  </div>
+  <img src="https://resortturkey.ru/wp-content/uploads/2022/11/istiklal-caddesi-stambul-5.jpg" alt="Car Model 2">
+</div>
+
+
+
+<button class="prev" onclick="plusSlides(-1)">&#10094;</button>
+<button class="next" onclick="plusSlides(1)">&#10095;</button>
 
 <script>
   let slideIndex = 0;
@@ -28,31 +39,125 @@
   showSlides();
 
   function plusSlides(n) {
-  if (!isTransitioning) {
-    showSlides(slideIndex += n);
+    if (!isTransitioning) {
+      showSlides(slideIndex += n);
+    }
+  }
+
+  function showSlides() {
+  try {
+    let i;
+    const slides = document.querySelectorAll('.carousel-item');
+    if (slides.length === 0) {
+      console.error("No carousel items found");
+      return;
+    }
+    if (slideIndex >= slides.length) { slideIndex = 0; }
+    if (slideIndex < 0) { slideIndex = slides.length - 1; }
+    isTransitioning = true;
+    for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = 'none';
+    }
+    slides[slideIndex].style.display = 'block';
+    setTimeout(() => {
+      isTransitioning = false;
+    }, 1000);
+  } catch (error) {
+    console.error(error);
   }
 }
+document.addEventListener('DOMContentLoaded', function(){
 
-function showSlides() {
-  let i;
-  const slides = document.querySelectorAll('.carousel-item');
-  if (slideIndex >= slides.length) { slideIndex = 0; }
-  if (slideIndex < 0) { slideIndex = slides.length - 1; }
-  isTransitioning = true;
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = 'none';
-  }
-  slides[slideIndex].style.display = 'block';
-  setTimeout(() => {
-    isTransitioning = false;
-  }, 1000); 
+const allButtons = document.querySelectorAll('.searchBtn');
+const searchBar = document.querySelector('.searchBar');
+const searchInput = document.getElementById('searchInput');
+const searchClose = document.getElementById('searchClose');
+
+for (var i = 0; i < allButtons.length; i++) {
+  allButtons[i].addEventListener('click', function() {
+    searchBar.style.visibility = 'visible';
+    searchBar.classList.add('open');
+    this.setAttribute('aria-expanded', 'true');
+    searchInput.focus();
+  });
 }
 
+searchClose.addEventListener('click', function() {
+  searchBar.style.visibility = 'hidden';
+  searchBar.classList.remove('open');
+  this.setAttribute('aria-expanded', 'false');
+});
 
-setInterval(() => {
-  if (!isTransitioning) {
-    plusSlides(1);
-  }
-}, 6000);
 
+});
 </script>
+
+<style>
+ .carousel {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.carousel-item {
+  width: 600px; /* Adjust width as needed */
+  display: none;
+  text-align: center;
+}
+
+.carousel-item.active {
+  display: block;
+}
+
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.prev {
+  left: 0;
+}
+
+.next {
+  right: 0;
+}
+
+.carousel-item-content {
+  padding: 20px;
+}
+
+.button-add,
+.button-edit,
+.button-delete {
+  display: inline-block;
+  margin: 5px;
+  padding: 8px 15px;
+  text-decoration: none;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button-add:hover,
+.button-edit:hover,
+.button-delete:hover {
+  background-color: #0056b3;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+</style>

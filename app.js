@@ -8,6 +8,7 @@ const multer = require('multer');
 const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongo');
+const path = require('path');
 
 const connectDB = require('./server/config/db');
 
@@ -27,7 +28,7 @@ const checkAdmin = (req, res, next) => {
 };
 
 app.use(checkAdmin);
-
+app.use(express.static(path.join(__dirname, 'server')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
@@ -41,6 +42,7 @@ app.use(session({
     mongoUrl: process.env.MONGODB_URI
   }),
 }));
+
 
 
 app.use(express.static('public'));
@@ -58,6 +60,7 @@ app.use('/', require('./server/routes/admin'));
 app.use('/', require('./server/routes/login'));
 app.use('/', require('./server/routes/news'));
 app.use('/', require('./server/routes/pop'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.listen(PORT, ()=> {
   console.log(`App listening on port ${PORT}`);
